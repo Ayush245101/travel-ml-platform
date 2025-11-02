@@ -1,0 +1,29 @@
+# Python caches and virtual environments
+__pycache__/
+*.py[cod]
+*.so
+.venv/
+.env
+.env.*
+
+# Test & coverage artifacts
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Build outputs
+build/
+dist/
+*.egg-info/
+
+# Editor folders
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# ML experiment outputs (regenerated as needed)
+mlruns/
+
+# Logs & misc
+*.log

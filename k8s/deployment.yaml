@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: travel-ml-api
+  labels:
+    app: travel-ml-api
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: travel-ml-api
+  template:
+    metadata:
+      labels:
+        app: travel-ml-api
+    spec:
+      containers:
+        - name: api
+          image: your-docker-user/travel-ml-api:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+          env:
+            - name: API_PORT
+              value: "8080"
+            - name: MODEL_LOCAL_PATH
+              value: "/app/models/regression_model.pkl"
+            - name: MLFLOW_MODEL_URI
+              value: "models:/FlightPriceModel/Production"
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 15
+            periodSeconds: 20
+      restartPolicy: Always
